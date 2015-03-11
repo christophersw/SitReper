@@ -1,0 +1,22 @@
+{
+  "name": "sitreper",
+  "version": "1.0.0",
+  "description": "A better way to generate and manage SitReps.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/christophersw/SitReper.git"
+  },
+  "author": "Christopher Webster, Max Romanik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/christophersw/SitReper/issues"
+  },
+  "homepage": "https://github.com/christophersw/SitReper",
+  "dependencies": {
+    "express": "^4.12.2"
+  }
+}
