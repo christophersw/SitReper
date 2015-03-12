@@ -1,7 +1,7 @@
 var config;
 
 config = {
-    url : 'https://sitreper-christophersw.c9.io'
+    url : 'http://sitreper.azurewebsites.net'
 };
 
 // Export config
