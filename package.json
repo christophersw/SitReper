@@ -17,8 +17,6 @@
   },
   "homepage": "https://github.com/christophersw/SitReper",
   "dependencies": {
-    "express": "^4.12.2",
-    "passport": "^0.2.1",
-    "passport-google": "^0.3.0"
+    "express": "^4.12.2"
   }
 }
