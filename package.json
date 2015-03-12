@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/christophersw/SitReper",
   "dependencies": {
-    "express": "^4.12.2"
+    "express": "^4.12.2",
+    "mailgun-js": "^0.6.8"
   }
 }
