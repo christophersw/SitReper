@@ -1,5 +1,6 @@
 var express = require('express') 
-  , config = require('.//config.js')
+  , config = require('./config.js')
+  , messaging = require('./messaging/messaging')
   , app = express();
 
 
