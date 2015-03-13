@@ -1,6 +1,6 @@
 {
   "name": "sitreper",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A better way to generate and manage SitReps.",
   "main": "app.js",
   "scripts": {
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/christophersw/SitReper",
   "dependencies": {
-    "express": "^4.12.2"
+    "express": "^4.12.2",
+    "nodemailer": "^1.3.2",
+    "nodemailer-mailgun-transport": "git+https://github.com/orliesaurus/nodemailer-mailgun-transport.git"
   }
 }
