@@ -11,35 +11,39 @@ function sitRep(){
     this.name = null;
     this.id = null;
     this.owners = [];
+    this.setupToken = null;
     return this;
 }
 
 /*
     Create a new sitRep
 */
-function create(name, ownerEmail, callback){
+function create(name, ownerEmail, password, callback){
     var newSitRep = new sitRep();
     
     newSitRep.name = name;
     newSitRep.id = getSlug(name);
+    newSitRep.setupToken = uuid.v4();
     
+    // Cannot create if name conflict exists. 
     if(exists(newSitRep.id)){
         callback(new Error('A sitRep with that id already exists.'));
     } else {
+        
         //Process for creating with new SitRep & New Users, all at once.
-        accounts.create(ownerEmail, newSitRep.id, function(err, ownerAccount){
+        accounts.create(ownerEmail, newSitRep.id, password, function(err, ownerAccount){
             if(err){
                 callback(err);
             } else {
                 newSitRep.owners.push(ownerAccount.email);
                 
-                //Save to HD
+                // Save to HD
                 context.create(newSitRep, function(err){
                     if(err){
                         callback(err);
                     } else {
-                        //Send the Email
-                        SendNewSitRepEmail(newSitRep.id, ownerAccount, function(err){
+                        // Send the Email
+                        SendNewSitRepEmail(newSitRep, ownerAccount, function(err){
                             if(err){
                                 callback(err);
                             } else {
@@ -91,8 +95,8 @@ module.exports.exists = exists;
 /*
     Sends a new account email after creating both a new SitRep and NewAccount
 */
-function SendNewSitRepEmail(id, ownerAccount, callback){
-    var link = config.main.domain + '/sitrep/' + id + '/setup?email=' + ownerAccount.email + '&token=' + ownerAccount.setupToken;
+function SendNewSitRepEmail(sitRep, ownerAccount, callback){
+    var link = config.main.domain + '/sitrep/' + sitRep.id + '/setup?token=' + sitRep.setupToken;
             hbs.render('./views/emails/newSitRep.handlebars',
                         {
                             sitRep: sitRep,

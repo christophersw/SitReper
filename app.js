@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-var express = require('express'), 
-    app = express();
-
-app.get('/', function (req, res) {
-  res.send('Hello World!');
-=======
 var express = require('express') 
   , exphbs  = require('express-handlebars')
   , bodyParser = require('body-parser')
@@ -68,15 +61,3 @@ var server = app.listen(process.env.PORT, function () {
   console.log('App listening at: ', host, port);
 
 });
-
-(function passHashTest(){
-    for (var i = 0; i < 20; i++) {
-        passwords.getHash("PssWrd!", function(err, result){
-          if(err){
-            console.log(err.message);
-          } else {
-            console.log("#" + i + " " + result);
-          }
-        });
-    }
-})();

@@ -1,120 +1,57 @@
 var validator = require('validator')
   , accounts = require('../models/account')
   , sitReps = require('../models/sitRep')
-  , passwords = require('../models/passwords')
   , _ = require('underscore');
 
 function getSetup(req, res){
-   var sitRepId = req.params.id;
+   var  sitRepId = req.params.id
+      , token = token = req.query.token;
    
    sitReps.get(sitRepId, function(err, sitRep) {
       if(err){
-         //TODO handle Error
-         throw new Error('Not Found!');
+         res.send(404);
       } else {
-         res.render('sitrep/setup', {
-            email: req.query.email,
-            sitRep:sitRep,
-            validationMessage: null
-         });
+         
+         // If this is already created, then the token on the sitRep will be null.
+         if(sitRep.setupToken === null){
+            res.redirect('/sitRep/' + sitRep.id);
+            return;
+         }
+         
+         // Does token match?
+         if(!sitRep.setupToken === token){
+            res.send(404);
+         } else {
+            sitRep.setupToken = null;
+            
+            sitReps.replace(sitRep, function(err){
+               if(err){
+                  // TODO handle error
+                  res.send(500);
+               } else {
+                  res.redirect('/sitRep/' + sitRep.id);
+               }
+            });
+         }
       }
    });
 }
 module.exports.getSetup = getSetup;
 
-function postSetup(req, res){
-   var  email = req.query.email
-      , token = req.query.token
-      , data = req.body
-      , sitRepId = req.params.id
-      , password = data.password
-      , confirm = data.confirm;
+function getSitRep(req, res){
+   var  sitRepId = req.params.id;
    
-   //Check that pass' match
-   if(password !== confirm){
-       sitReps.get(sitRepId, function(err, sitRep) {
-         if(err){
-            //TODO handle Error
-            throw new Error('Not Found!');
+   sitReps.get(sitRepId, function(err, sitRep) {
+      if(err){
+         res.send(404);
+      } else {
+         // If this is not activated we can't continue.
+         if(sitRep.setupToken !== null){
+            res.render('sitrep/notActivated');
          } else {
-            res.render('sitrep/setup', {
-               email: req.query.email,
-               sitRep:sitRep,
-               validationMessage: "Opps. Those password entries didn't match."
-            });
-            return;
+            res.render('sitrep/sitrep', sitRep);
          }
-      });
-      return;
-   }
-   
-   if(!validator.isLength(password, 10, 200)){
-      sitReps.get(sitRepId, function(err, sitRep) {
-         if(err){
-            //TODO handle Error
-            throw new Error('Not Found!');
-         } else {
-            res.render('sitrep/setup', {
-               email: req.query.email,
-               sitRep:sitRep,
-               validationMessage: "Opps. That password is too short. Try something longer. (10+)"
-            });
-            return;
-         }
-      });
-      return;
-   }
-   
-   //LookUp Account
-   if(!sitReps.exists(sitRepId)){
-      //TODO handle Error
-      throw new Error('Not Found!');
-   } else {
-      sitReps.get(sitRepId, function(err, sitRep){
-         if(err){
-            //TODO handle Error
-            throw err;
-         } else {
-            //Check that user exists, and is owner.
-            if(_.contains(sitRep.owners, email)){
-               accounts.get(email, sitRep.id, function(err, account){
-                  if(err){
-                     //TODO handle Error
-                     throw err; 
-                  } else {
-                     //Check token
-                     if(account.setupToken === token){
-                        //Blank the token... 
-                        account.setupToken = null;
-                        
-                        passwords.getHash(password, function(err, hashedPass){
-                           if(err){
-                              //TODO handle Error
-                              throw err;
-                           } else {
-                              account.hashedPass = hashedPass;
-                              accounts.replace(account, sitRepId, function(err){
-                                 if(err){
-                                    //TODO handle Error
-                                    throw err;
-                                 } else {
-                                    //res.redirect('/sitrep/' + sitRepId);
-                                 }
-                              });
-                           }
-                        });
-                     } else {
-                        //TODO handle Error
-                        throw new Error('Invalid Token.');
-                     }
-                  }
-               });
-            } else {
-               //TODO handle Error
-               throw new Error('Not a valid owner.');
-            }
-         }
-      });
-   }
+      }   
+   });
 }
-module.exports.postSetup = postSetup;
+module.exports.getSitRep = getSitRep;

@@ -21,9 +21,13 @@ function postIndex(req, res){
     var   data = req.body
         , name = data.proposedId
         , email = data.ownerEmail
+        , password = data.password
         , slug = getSlug(name);
     
-    //Validation.
+    /*
+      Validation.
+    */
+    // Name is alpha numeric
     if(!validator.matches(name, '[a-zA-Z0-9\s]+')){
        res.render('home/index', {
         validationMessage: "Sorry, that name not allowed, please use only letters, numbers, and spaces.",
@@ -32,6 +36,7 @@ function postIndex(req, res){
       return;
     }
     
+    // Email is a valid email address
     if(!validator.isEmail(email)){
       res.render('home/index', {
         validationMessage: "Sorry, that does not appear to be a valid email.",
@@ -40,7 +45,16 @@ function postIndex(req, res){
       return;
     }
     
+    // Password is long enough
+    if(!validator.isLength(password, 10, 200)){
+      res.render('home/index', {
+        validationMessage: "Sorry, that password isn't long enough. Please use at least 10 characters.",
+        domain: config.main.domain
+      });
+      return;
+    }
     
+    //SitRep doesn't already exist
     if(sitReps.exists(slug)){
       res.render('home/index', {
         validationMessage: "Sorry, that name is already taken. Try something else.",
@@ -48,9 +62,8 @@ function postIndex(req, res){
       });
       return;
     } else {
-      sitReps.create(name, email, function(err){
+      sitReps.create(name, email, password, function(err){
         if(err){
-          
           //TODO - something more than simply log this...
           console.error(err.message);
           

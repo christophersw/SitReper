@@ -3,7 +3,8 @@ var   validator = require('validator')
     , hbs  = require('express-handlebars').create()
     , context = require('../contexts/accountFileContext')
     , messaging  = require('../messaging/messaging')
-    , config = require('../config');
+    , config = require('../config')
+    , passwords = require('../models/passwords');
 
 /*
  *   Account Model
@@ -11,11 +12,9 @@ var   validator = require('validator')
 function account (){
     this.email = null;
     this.hashedPass = null;
-    this.setupToken = null;
     this.sitRepId = null;
     return this;
 }
-
 
 /*
     Get an account, by providing an email.
@@ -45,22 +44,28 @@ function replace(account, sitRepId, callback){
 }
 module.exports.replace = replace;
 
-
 /* 
     Create a new account
 */
-function create (email, sitRepId, callback){
+function create (email, sitRepId, password, callback){
     if(validator.isEmail(email)){
         
         var newAccount = new account();
         newAccount.email = email;
-        newAccount.setupToken = uuid.v4();
+        newAccount.sitRepId = sitRepId;
         
-        context.create(newAccount, sitRepId, function(err){
+        passwords.getHash(password, function(err, hashedPass){
             if(err){
                 callback(err);
             } else {
-                callback(null, newAccount);
+                newAccount.hashedPass = hashedPass;
+                context.create(newAccount, sitRepId, function(err){
+                    if(err){
+                        callback(err);
+                    } else {
+                        callback(null, newAccount);
+                    }
+                });
             }
         });
     } else {
