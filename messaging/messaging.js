@@ -6,12 +6,12 @@ var config = require('../config')
 /**
  * An object for creating emails and triggering a send action.
  */
-function email(from, to, subject, text, html) {
-    this.from = from;
-    this.to = to;
-    this.subject = subject;
-    this.text = text;
-    this.html = html;
+function email(options) {
+    this.from = options.to;
+    this.to = options.from;
+    this.subject = options.subject;
+    this.text = options.text;
+    this.html = options.html;
     this.send = function(callback){
                 sendMail(this, callback);
               };
