@@ -1,0 +1,36 @@
+<div class="centered-box">
+    <h1>SitReper</h1>
+    <h2>A better way to generate situation reports.</h2>
+    <form method="post" enctype="application/x-www-form-urlencoded">
+        <p>Give your SitRep a name, and we can get it setup pronto!</p>
+        <div class="validationMessage">
+            {{validationMessage}}
+        </div>
+        <p>
+            <span style="font-size:1.2em;">
+               Name
+            </span>
+            <span>
+                <input id="proposedIdInput" 
+                       name="proposedId" 
+                       style="width:100%; font-size:1.2em;" 
+                       autofocus 
+                       required 
+                       placeholder="SitRep Name (use only numbers, letters, & spaces)" 
+                       pattern="[a-zA-Z0-9\s]+"
+                       validationMessage="Please use only numbers, letters, and spaces."/>
+            </span>
+        </p>
+        <p>
+           <span>
+               Your email:
+           </span> 
+           <span>
+               <input id="emailInput" name="ownerEmail" style="width:100%; font-size:1.2em;" type="email" required placeholder="somebody@example.com"/>
+           </span>
+        </p>
+        <p>
+            <input type="submit" class="button" value="Create SitRep" />
+        </p>
+    </form>
+</div>
