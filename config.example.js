@@ -1,6 +1,13 @@
-var config = {
+module.exports.config = {
     /*
-    *Set Email provider.
+        Set Main settings, like top level domain where sit is running.
+    */
+    main: {
+        domain: 'https://sitreper-christophersw.c9.io'
+    },
+   
+    /*
+        Set Email provider.
     */
     email: {
         options: 
@@ -13,5 +20,3 @@ var config = {
         }
     }    
 };
-
-module.exports.config = config;

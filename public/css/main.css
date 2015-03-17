@@ -1,0 +1,66 @@
+body {
+    background-color:#343434;
+    color: white;
+    font-family: sans-serif;
+    margin: 0px;
+}
+
+h1, h2, h3, h4 {
+    font-family: sans-serif;
+    color: #F0EFED;
+}
+
+#content {
+   padding:10px;
+   padding-bottom:60px;   /* Height of the footer */
+}
+
+#footer {
+   color:#343434;
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:60px;   /* Height of the footer */
+   background:#EF5332;
+   text-align: right;
+}
+
+#footer a:link, #footer a:visited {
+    color:white;
+}
+
+#footer p {
+    margin-right:10px;
+}
+
+.centered-box {
+    position:absolute;
+    top:33%;
+    left:50%;
+    margin-top:-50px; /* this is half the height of your div*/  
+    margin-left:-100px; /*this is half of width of your div*/    
+}
+
+/*
+ * Forms 
+ */
+
+.button {
+    border-radius: 10px;
+    border: 1px solid white;
+    color: #343434;
+    background: #EF5332;
+    font-size: 1.3em;
+    padding: .3em;
+}
+
+.button:hover {
+    border: 1px solid #EF5332;
+    color: #F0EFED;
+    background: #990000;
+}
+
+.validationMessage {
+    color:#EF5332;
+    font-family:consolas;
+}
