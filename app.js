@@ -25,6 +25,13 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 //Set routing for static files
 app.use('/public', express.static('./public'));
 
+//Set routing to BootStrap Dist files
+app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
+
+//Set routing to JQuery Dist file
+app.use('/jquery', express.static('./node_modules/jquery/dist/cdn'));
+
+
 /*
   Routes for HOME
 */
