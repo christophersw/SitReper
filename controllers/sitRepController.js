@@ -49,7 +49,7 @@ function getSitRep(req, res){
          if(sitRep.setupToken !== null){
             res.render('sitrep/notActivated');
          } else {
-            res.render('sitrep/sitrep', sitRep);
+            res.render('sitrep/index', {layout:'sitrep', data: sitRep});
          }
       }   
    });

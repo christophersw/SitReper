@@ -3,6 +3,7 @@ var express = require('express')
   , bodyParser = require('body-parser')
   , config = require('./config.js')
   , homeController = require('./controllers/homeController')
+  , sitRepAPI = require('./controllers/sitRepAPI')
   , sitRepController = require('./controllers/sitRepController')
   , messaging = require('./messaging/messaging')
   , sitReps = require('./models/sitRep')
@@ -25,12 +26,14 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 //Set routing for static files
 app.use('/public', express.static('./public'));
 
+//Set routing for client files
+app.use('/client', express.static('./client/dist'));
+
 //Set routing to BootStrap Dist files
 app.use('/bootstrap', express.static('./node_modules/bootstrap/dist'));
 
 //Set routing to JQuery Dist file
-app.use('/jquery', express.static('./node_modules/jquery/dist/cdn'));
-
+app.use('/jquery', express.static('./node_modules/jquery/dist'));
 
 /*
   Routes for HOME
@@ -45,7 +48,7 @@ app.post('/', function(req, res){homeController.postIndex(req, res);});
 
 
 /*
-  Routes for SitRep
+  Routes for SitRep Website
 */
 app.get('/sitrep/:id/setup', function(req, res){
   sitRepController.getSetup(req, res);

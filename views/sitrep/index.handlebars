@@ -1,0 +1,31 @@
+<div id="root" class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <h3>Please Login</h3>
+        <form>
+             <p class="text-danger">
+                {{validationMessage}}
+            </p>
+            <p>
+               <span>
+                   <input id="emailInput" name="ownerEmail" style="width:100%; font-size:1.2em;" type="email" required placeholder="somebody@example.com"/>
+               </span>
+            </p>
+            <p>
+               <span>
+                   <input id="passwordInput" name="password" style="width:100%; font-size:1.2em;" type="password" placeholder="password" required min="10" max="100" />
+               </span>
+            </p>
+            <p>
+                <button id="loginButton" type="submit" class="btn btn-primary" value="Login">Login</button>
+            </p>
+        </form>
+    </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+<script type="text/javascript">
+    window.onload = function() {
+        window.init('{{model.id}}');
+    };
+</script>

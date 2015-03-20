@@ -96,7 +96,7 @@ module.exports.exists = exists;
     Sends a new account email after creating both a new SitRep and NewAccount
 */
 function SendNewSitRepEmail(sitRep, ownerAccount, callback){
-    var link = config.main.domain + '/sitrep/' + sitRep.id + '/setup?token=' + sitRep.setupToken;
+    var link = config.main.domain + '/sitrep/' + sitRep.id + '/setup?email=' + ownerAccount.email + '&token=' + sitRep.setupToken;
             hbs.render('./views/emails/newSitRep.handlebars',
                         {
                             sitRep: sitRep,
