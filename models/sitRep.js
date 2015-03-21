@@ -11,6 +11,7 @@ function sitRep(){
     this.name = null;
     this.id = null;
     this.owners = [];
+    this.sections = [];
     this.setupToken = null;
     return this;
 }
