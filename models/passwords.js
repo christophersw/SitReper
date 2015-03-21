@@ -14,3 +14,14 @@ function getHash(pass, callback){
     });
 }
 module.exports.getHash = getHash;
+
+function checkPass(pass, hash, callback){
+    scrypt.verifyHash(hash, pass, function(err, result) {
+        if(err){
+            callback(err);
+        } else {
+            callback(null, result);
+        }
+    });
+}
+module.exports.checkPass = checkPass;
