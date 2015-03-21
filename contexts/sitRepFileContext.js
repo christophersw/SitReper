@@ -1,8 +1,7 @@
-var   fs = require('fs')
+var  fs = require('fs')
     , _ = require('underscore')
     , mkdirp = require('mkdirp')
-    , path = './appdata/sitreps/'
-    , index = [];
+    , path = './appdata/sitreps/';
     
 function create(sitRep, callback){
     //Check to see if the file exists...
